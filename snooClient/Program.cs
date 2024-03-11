@@ -12,24 +12,30 @@ namespace snooClient
     internal class Program
     {
         // -------------------- config --------------------
-        private const string Version = "1.0";
-        private const string Name = "snooClient";
-        private const string Title = " | " + Name + Version;
+        private const string Version = "2.0";
+        private const string Name = "snooTools";
+        private const string Author = "snoopti";
+        private const string ContinueMessage = "Press any button to continue";
+        private const string Title = " | " + Name + " v" + Version + " by " + Author;
 
         // -------------------- menu --------------------
         static async Task Main(string[] args)
         {
-            Console.Title = Name;
             while (true)
             {
                 Console.Clear();
                 Console.Title = "Home" + Title;
-                Console.WriteLine("--- Welcome to snooClient ---\n");
+                Console.WriteLine("--- Welcome to snooClient ---");
+                Console.WriteLine("");
+                Console.WriteLine("--- Tools");
                 Console.WriteLine("[1] Webhooksender");
                 Console.WriteLine("[2] Systemoptimizer");
-                Console.WriteLine("[#] Infos");
+                Console.WriteLine("");
+                Console.WriteLine("--- Informations");
+                Console.WriteLine("[#] About");
                 Console.WriteLine("[?] Discord");
-                Console.WriteLine("[0] Exit\n");
+                Console.WriteLine("[0] Exit");
+                Console.WriteLine("");
                 Console.Write("Choose an option: ");
 
                 string option = Console.ReadLine();
@@ -76,21 +82,67 @@ namespace snooClient
         // -------------------- info: discord --------------------
         static void InfoDiscord()
         {
+            Console.WriteLine(ContinueMessage);
+            Console.ReadKey();
             Console.WriteLine("Opening Discord...");
             System.Diagnostics.Process.Start("https://snoopti.de/discord");
-            Console.WriteLine("Press any key to return to the menu...");
-            Console.ReadKey();
         }
 
         // -------------------- tool: SystemOptimizer --------------------
         static void SystemOptimizer()
         {
+            Console.WriteLine("--- Systemoptimizer ---");
+            Console.WriteLine("Click any button to continue");
+            Console.ReadKey();
             try
             {
                 string username = Environment.UserName;
+                string[] foldersToEmpty =
+                {
+                    $@"C:\Users\{username}\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content",
+                    $@"C:\Users\{username}\AppData\Local\D3DSCache",
+                    $@"C:\Users\{username}\AppData\Local\Temp",
+                    $@"C:\Users\{username}\.cache",
+                    $@"C:\Users\{username}\AppData\LocalLow\Temp",
+                    $@"C:\ProgramData\Microsoft\Windows\WER\ReportArchive",
+                    $@"C:\Windows\SoftwareDistribution\Download",
+                    $@"C:\Windows\Temp",
+                    $@"C:\Users\{username}\AppData\Local\NVIDIA\DXCache",
+                    $@"C:\Users\{username}\AppData\Local\NVIDIA\GLCache",
+                    $@"C:\Users\{username}\AppData\Local\CapCut\User Data\Cache",
+                    $@"C:\Users\{username}\AppData\Roaming\discord\Code Cache",
+                    $@"C:\Users\{username}\AppData\Local\pip\cache",
+                    $@"C:\Users\{username}\AppData\Roaming\Microsoft\Teams\Code Cache\js",
+                    $@"C:\Users\{username}\AppData\Roaming\discord\Code Cache\js",
+                    $@"C:\Users\{username}\AppData\Local\Microsoft\Edge\User Data\BrowserMetrics",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Default\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Default\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 1\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 1\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 2\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 2\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 3\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 3\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 4\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 4\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 5\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 5\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 6\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 6\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 7\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 7\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 8\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 8\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 9\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 9\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 10\Cache\Cache_Data",
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 10\Service Worker\CacheStorage"
+                };
 
-                EmptyFolder($@"C:\Users\{username}\AppData\Local\Temp");
-                EmptyFolder($@"C:\Users\{username}\AppData\LocalLow\Temp");
+                foreach (string folder in foldersToEmpty)
+                {
+                    EmptyFolder(folder);
+                }
 
                 Console.WriteLine("System optimized successfully.");
             }
@@ -102,52 +154,37 @@ namespace snooClient
 
         static void EmptyFolder(string path)
         {
-            if (Directory.Exists(path))
+            try
             {
-                try
+                if (Directory.Exists(path))
                 {
-                    DirectoryInfo directory = new DirectoryInfo(path);
-                    foreach (FileInfo file in directory.GetFiles())
-                    {
-                        try
-                        {
-                            file.Delete();
-                            Console.WriteLine($"File {file.FullName} deleted successfully.");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error deleting file {file.FullName}: {ex.Message}");
-                        }
-                    }
-                    foreach (DirectoryInfo subDirectory in directory.GetDirectories())
-                    {
-                        try
-                        {
-                            EmptyFolder(subDirectory.FullName);
-                            subDirectory.Delete();
-                            Console.WriteLine($"Folder {subDirectory.FullName} deleted successfully.");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error deleting folder {subDirectory.FullName}: {ex.Message}");
-                        }
-                    }
-                    Console.WriteLine($"Folder {path} emptied successfully.");
+                    Directory.Delete(path, recursive: true);
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine(path);
+                    Console.ResetColor();
                 }
-                catch (UnauthorizedAccessException ex)
+                else
                 {
-                    Console.WriteLine($"Error: Access to some files or directories in {path} is denied.");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"An error occurred while emptying the folder {path}: {ex.Message}");
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine(path);
+                    Console.ResetColor();
                 }
             }
-            else
+            catch (UnauthorizedAccessException)
             {
-                Console.WriteLine($"Folder {path} does not exist.");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine(path);
+                Console.ResetColor();
+            }
+            catch (Exception)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(path);
+                Console.ResetColor();
             }
         }
+
+
 
 
         // -------------------- tool: webhook sender --------------------
