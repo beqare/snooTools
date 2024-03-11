@@ -1,24 +1,32 @@
 ﻿using System;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+
+using System.IO;
 
 namespace snooClient
 {
     internal class Program
     {
+        // -------------------- config --------------------
         private const string Version = "1.0";
         private const string Name = "snooClient";
+        private const string Title = " | " + Name + Version;
 
+        // -------------------- menu --------------------
         static async Task Main(string[] args)
         {
             Console.Title = Name;
             while (true)
             {
                 Console.Clear();
-                Console.Title = "Home" + " | " + Name + Version;
+                Console.Title = "Home" + Title;
                 Console.WriteLine("--- Welcome to snooClient ---\n");
-                Console.WriteLine("[1] Webhook Sender");
+                Console.WriteLine("[1] Webhooksender");
+                Console.WriteLine("[2] Systemoptimizer");
                 Console.WriteLine("[#] Infos");
                 Console.WriteLine("[?] Discord");
                 Console.WriteLine("[0] Exit\n");
@@ -29,12 +37,18 @@ namespace snooClient
                 switch (option)
                 {
                     case "1":
-                        Console.Title = Name + " | " + "WebhookSender";
                         Console.Clear();
+                        Console.Title = "Webhooksender" + Title;
                         await WebhookSender();
+                        break;
+                    case "2":
+                        Console.Clear();
+                        Console.Title = "Systemoptimizer" + Title;
+                        SystemOptimizer();
                         break;
                     case "#":
                         Console.Clear();
+                        Console.Title = "Informations" + Title;
                         Console.WriteLine("Version: " + Version);
                         break;
                     case "?":
@@ -42,10 +56,14 @@ namespace snooClient
                         InfoDiscord();
                         break;
                     case "0":
+                        Console.Clear();
+                        Console.Title = "Exit" + Title;
+                        Countdown(3);
                         Environment.Exit(0);
                         break;
                     default:
                         Console.Clear();
+                        Console.Title = "Error" + Title;
                         Console.WriteLine("Invalid option!");
                         break;
                 }
@@ -55,6 +73,7 @@ namespace snooClient
             }
         }
 
+        // -------------------- info: discord --------------------
         static void InfoDiscord()
         {
             Console.WriteLine("Opening Discord...");
@@ -63,6 +82,75 @@ namespace snooClient
             Console.ReadKey();
         }
 
+        // -------------------- tool: SystemOptimizer --------------------
+        static void SystemOptimizer()
+        {
+            try
+            {
+                string username = Environment.UserName;
+
+                EmptyFolder($@"C:\Users\{username}\AppData\Local\Temp");
+                EmptyFolder($@"C:\Users\{username}\AppData\LocalLow\Temp");
+
+                Console.WriteLine("System optimized successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while optimizing the system: {ex.Message}");
+            }
+        }
+
+        static void EmptyFolder(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                try
+                {
+                    DirectoryInfo directory = new DirectoryInfo(path);
+                    foreach (FileInfo file in directory.GetFiles())
+                    {
+                        try
+                        {
+                            file.Delete();
+                            Console.WriteLine($"File {file.FullName} deleted successfully.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error deleting file {file.FullName}: {ex.Message}");
+                        }
+                    }
+                    foreach (DirectoryInfo subDirectory in directory.GetDirectories())
+                    {
+                        try
+                        {
+                            EmptyFolder(subDirectory.FullName);
+                            subDirectory.Delete();
+                            Console.WriteLine($"Folder {subDirectory.FullName} deleted successfully.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error deleting folder {subDirectory.FullName}: {ex.Message}");
+                        }
+                    }
+                    Console.WriteLine($"Folder {path} emptied successfully.");
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    Console.WriteLine($"Error: Access to some files or directories in {path} is denied.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred while emptying the folder {path}: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Folder {path} does not exist.");
+            }
+        }
+
+
+        // -------------------- tool: webhook sender --------------------
         static async Task WebhookSender()
         {
             Console.WriteLine("Enter Webhook URL:");
@@ -108,6 +196,17 @@ namespace snooClient
                 {
                     Console.WriteLine($"An error occurred: {ex.Message}");
                 }
+            }
+        }
+
+        // -------------------- system: countdown --------------------
+        static void Countdown(int seconds)
+        {
+            for (int i = seconds; i > 0; i--)
+            {
+                Console.WriteLine($"Exiting in {i} seconds...");
+                Thread.Sleep(1000);
+                Console.Clear();
             }
         }
     }
