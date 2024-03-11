@@ -9,6 +9,7 @@ using System.Net;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace snooClient
 {
@@ -256,8 +257,26 @@ namespace snooClient
         {
             try
             {
-                string ipAddress = new WebClient().DownloadString("http://icanhazip.com");
-                Console.WriteLine($"Your current IP address is: {ipAddress}");
+                string ipAddress = new WebClient().DownloadString("http://icanhazip.com").Trim();
+                Console.WriteLine($"IP: {ipAddress}");
+
+                string apiUrl = $"http://ip-api.com/json/{ipAddress}?fields=country,regionName,city,isp,lat,lon,timezone,as";
+                string jsonResult = new WebClient().DownloadString(apiUrl);
+
+                dynamic locationInfo = JsonConvert.DeserializeObject(jsonResult);
+                string country = locationInfo.country;
+                string region = locationInfo.regionName;
+                string city = locationInfo.city;
+                string isp = locationInfo.isp;
+                double latitude = locationInfo.lat;
+                double longitude = locationInfo.lon;
+                string timezone = locationInfo.timezone;
+
+                Console.WriteLine($"Location: {city}, {region}, {country}");
+                Console.WriteLine($"ISP: {isp}");
+                Console.WriteLine($"Latitude: {latitude}");
+                Console.WriteLine($"Longitude: {longitude}");
+                Console.WriteLine($"Timezone: {timezone}");
             }
             catch (Exception ex)
             {
@@ -265,17 +284,22 @@ namespace snooClient
             }
         }
 
+
+
         // ---------------------------------------- tool: speedtest ----------------------------------------
         static async Task CheckInternetSpeed()
         {
             try
             {
+                string ipAddress = new WebClient().DownloadString("http://icanhazip.com").Trim();
+                
                 const int numTests = 5;
                 var results = new List<double>();
                 var url = "https://snoopti.de/download/speedtest1mb.zip";
 
-                Console.WriteLine($"Running internet speed test {numTests} times...");
-                Console.WriteLine($"Testing on {url}");
+                Console.WriteLine($"IP Adress: {ipAddress}");
+                Console.WriteLine($"Server: Berlin/Karlsruhe | Germany");
+                Console.WriteLine($"Running {numTests} times...");
 
                 using (var httpClient = new HttpClient())
                 {
