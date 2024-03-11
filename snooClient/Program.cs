@@ -6,21 +6,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Net;
-
+using System.Linq;
 using System.IO;
+using System.Collections.Generic;
 
 namespace snooClient
 {
     internal class Program
     {
-        // -------------------- config --------------------
+        // ---------------------------------------- config ----------------------------------------
         private const string Version = "2.0";
         private const string Name = "snooTools";
         private const string Author = "snoopti";
         private const string ContinueMessage = "Press any button to continue";
         private const string Title = " | " + Name + " v" + Version + " by " + Author;
 
-        // -------------------- menu --------------------
+        // ---------------------------------------- menu ----------------------------------------
         static async Task Main(string[] args)
         {
             while (true)
@@ -93,7 +94,7 @@ namespace snooClient
             }
         }
 
-        // -------------------- info: discord --------------------
+        // ---------------------------------------- info: discord ----------------------------------------
         static void InfoDiscord()
         {
             Console.WriteLine(ContinueMessage);
@@ -102,7 +103,7 @@ namespace snooClient
             System.Diagnostics.Process.Start("https://snoopti.de/discord");
         }
 
-        // -------------------- tool: SystemOptimizer --------------------
+        // ---------------------------------------- tool: SystemOptimizer ----------------------------------------
         static void SystemOptimizer()
         {
             Console.WriteLine("--- Systemoptimizer ---");
@@ -201,7 +202,7 @@ namespace snooClient
 
 
 
-        // -------------------- tool: webhook sender --------------------
+        // ---------------------------------------- tool: webhook sender ----------------------------------------
         static async Task WebhookSender()
         {
             Console.WriteLine("Enter Webhook URL:");
@@ -250,7 +251,7 @@ namespace snooClient
             }
         }
 
-        // -------------------- tool: showip --------------------
+        // ---------------------------------------- tool: showip ----------------------------------------
         static void showIpAdress()
         {
             try
@@ -264,33 +265,63 @@ namespace snooClient
             }
         }
 
-        // -------------------- tool: Internetgeschwindigkeitstest --------------------
+        // ---------------------------------------- tool: speedtest ----------------------------------------
         static async Task CheckInternetSpeed()
         {
             try
             {
-                Console.WriteLine("Running internet speed test...");
+                const int numTests = 5;
+                var results = new List<double>();
+                var url = "https://snoopti.de/download/speedtest1mb.zip";
+
+                Console.WriteLine($"Running internet speed test {numTests} times...");
+                Console.WriteLine($"Testing on {url}");
 
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.Timeout = TimeSpan.FromSeconds(30);
 
-                    var stopwatch = Stopwatch.StartNew();
-                    var url = "https://snoopti.de/download/SPEEDTEST.zip";
-                    Console.WriteLine($"Testing on: {url}");
-                    var response = await httpClient.GetAsync(url);
-                    await response.Content.ReadAsStringAsync();
-                    stopwatch.Stop();
+                    for (int i = 1; i <= numTests; i++)
+                    {
+                        var stopwatch = Stopwatch.StartNew();
 
-                    double speedInMbps = CalculateSpeed(stopwatch.Elapsed);
-                    Console.WriteLine($"Current speed: {speedInMbps:F2} Mbps");
+                        try
+                        {
+                            var response = await httpClient.GetAsync(url);
+                            response.EnsureSuccessStatusCode();
+                            await response.Content.ReadAsByteArrayAsync();
+                        }
+                        catch (HttpRequestException ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+                            continue;
+                        }
+                        catch (TaskCanceledException ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+                            continue;
+                        }
+
+                        stopwatch.Stop();
+
+                        double speedInMbps = CalculateSpeed(stopwatch.Elapsed);
+                        Console.WriteLine($"Test {i}: {speedInMbps:F2} Mbps");
+                        results.Add(speedInMbps);
+
+                        await Task.Delay(5000);
+                    }
                 }
+
+                double averageSpeed = results.Any() ? results.Average() : 0;
+                Console.WriteLine($"\nAverage speed over {results.Count} tests: {averageSpeed:F2} Mbps");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
+
+
 
         static double CalculateSpeed(TimeSpan elapsed)
         {
