@@ -200,9 +200,6 @@ namespace snooClient
             }
         }
 
-
-
-
         // ---------------------------------------- tool: webhook sender ----------------------------------------
         static async Task WebhookSender()
         {
@@ -284,8 +281,6 @@ namespace snooClient
             }
         }
 
-
-
         // ---------------------------------------- tool: speedtest ----------------------------------------
         static async Task CheckInternetSpeed()
         {
@@ -344,8 +339,6 @@ namespace snooClient
                 Console.WriteLine($"Error: {ex.Message}");
             }
         }
-
-
 
         static double CalculateSpeed(TimeSpan elapsed)
         {
