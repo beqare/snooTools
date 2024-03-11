@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Net;
 
 using System.IO;
 
@@ -30,6 +32,8 @@ namespace snooClient
                 Console.WriteLine("--- Tools");
                 Console.WriteLine("[1] Webhooksender");
                 Console.WriteLine("[2] Systemoptimizer");
+                Console.WriteLine("[3] IPAdressviewer");
+                Console.WriteLine("[4] Speedtest");
                 Console.WriteLine("");
                 Console.WriteLine("--- Informations");
                 Console.WriteLine("[#] About");
@@ -51,6 +55,16 @@ namespace snooClient
                         Console.Clear();
                         Console.Title = "Systemoptimizer" + Title;
                         SystemOptimizer();
+                        break;
+                    case "3":
+                        Console.Clear();
+                        Console.Title = "IPAdressviewer" + Title;
+                        showIpAdress();
+                        break;
+                    case "4":
+                        Console.Clear();
+                        Console.Title = "Speedtest" + Title;
+                        await CheckInternetSpeed();
                         break;
                     case "#":
                         Console.Clear();
@@ -234,6 +248,59 @@ namespace snooClient
                     Console.WriteLine($"An error occurred: {ex.Message}");
                 }
             }
+        }
+
+        // -------------------- tool: showip --------------------
+        static void showIpAdress()
+        {
+            try
+            {
+                string ipAddress = new WebClient().DownloadString("http://icanhazip.com");
+                Console.WriteLine($"Your current IP address is: {ipAddress}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while fetching the IP address: {ex.Message}");
+            }
+        }
+
+        // -------------------- tool: Internetgeschwindigkeitstest --------------------
+        static async Task CheckInternetSpeed()
+        {
+            try
+            {
+                Console.WriteLine("Running internet speed test...");
+
+                using (var httpClient = new HttpClient())
+                {
+                    httpClient.Timeout = TimeSpan.FromSeconds(30);
+
+                    var stopwatch = Stopwatch.StartNew();
+                    var url = "https://snoopti.de/download/SPEEDTEST.zip";
+                    Console.WriteLine($"Testing on: {url}");
+                    var response = await httpClient.GetAsync(url);
+                    await response.Content.ReadAsStringAsync();
+                    stopwatch.Stop();
+
+                    double speedInMbps = CalculateSpeed(stopwatch.Elapsed);
+                    Console.WriteLine($"Current speed: {speedInMbps:F2} Mbps");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        static double CalculateSpeed(TimeSpan elapsed)
+        {
+            const int fileSizeInBytes = 1024 * 1024;
+            const int bitsInByte = 8;
+            double seconds = elapsed.TotalSeconds;
+            double bytesPerSecond = fileSizeInBytes / seconds;
+            double bitsPerSecond = bytesPerSecond * bitsInByte;
+            double speedInMbps = bitsPerSecond / 1024 / 1024;
+            return speedInMbps;
         }
 
         // -------------------- system: countdown --------------------
