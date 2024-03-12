@@ -1,4 +1,4 @@
-# [DOWNLOAD LATEST](https://snoopti.de/snootools/)
+# [DOWNLOAD LATEST](https://snoopti.de/projects/?site=1)
 
 ![logo](https://snoopti.de/cloud/snootools/logo.png)
 The tool is still in a so-called open beta version, which will be updated with more features or improvements in the future, I hope you like the tool and are satisfied with it, please do not be surprised if bugs appear from time to time.
