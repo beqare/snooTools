@@ -152,7 +152,12 @@ namespace snooClient
                     $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 9\Cache\Cache_Data",
                     $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 9\Service Worker\CacheStorage",
                     $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 10\Cache\Cache_Data",
-                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 10\Service Worker\CacheStorage"
+                    $@"C:\Users\{username}\AppData\Local\Google\Chrome\User Data\Profile 10\Service Worker\CacheStorage",
+                    $@"C:\Users\{username}\AppData\LocalLow\Microsoft\CryptnetUrlCache\MetaData"
+
+
+
+               
                 };
 
                 foreach (string folder in foldersToEmpty)
@@ -287,7 +292,7 @@ namespace snooClient
             try
             {
                 string ipAddress = new WebClient().DownloadString("http://icanhazip.com").Trim();
-                
+
                 const int numTests = 5;
                 var results = new List<double>();
                 var url = "https://snoopti.de/download/speedtest1mb.zip";
