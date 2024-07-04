@@ -1,6 +1,6 @@
-# [DOWNLOAD LATEST](https://github.com/snoopti/snooToolsV2/releases/latest)
+# [DOWNLOAD LATEST](https://github.com/snoopti/snooTools/releases/latest)
 
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/snoopti/snooToolsV2/total)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/snoopti/snooTools/total)
 
 
 ![logo](https://snoopti.de/cloud/snootools/logo.png)
@@ -15,6 +15,9 @@ Do not spread untruths and do not claim that it is a virus, look in the source c
 ---
 
 ![changelog](https://snoopti.de/cloud/snootools/changelog-text.png)
+
+### v2.0.1
+- added more optimizing paths
 
 ### v2.0.0
 - Moved from bat to C#
