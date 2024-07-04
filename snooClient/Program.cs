@@ -16,7 +16,7 @@ namespace snooClient
     internal class Program
     {
         // ---------------------------------------- config ----------------------------------------
-        private const string Version = "2.0";
+        private const string Version = "2.1";
         private const string Name = "snooTools";
         private const string Author = "snoopti";
         private const string ContinueMessage = "Press any button to continue";
@@ -29,7 +29,7 @@ namespace snooClient
             {
                 Console.Clear();
                 Console.Title = "Home" + Title;
-                Console.WriteLine("--- Welcome to snooClient ---");
+                Console.WriteLine($"--- Welcome to {Name} ---");
                 Console.WriteLine("");
                 Console.WriteLine("--- Tools");
                 Console.WriteLine("[1] Webhooksender");
@@ -113,23 +113,69 @@ namespace snooClient
             try
             {
                 string user = Environment.UserName;
+                string LOCALAPPDATA = Environment.GetEnvironmentVariable("LOCALAPPDATA");
+                string SYSTEMROOT = Environment.GetEnvironmentVariable("SYSTEMROOT");
+                string TEMP = Environment.GetEnvironmentVariable("TEMP");
+                string AllUsersProfile = Environment.GetEnvironmentVariable("AllUsersProfile");
                 string[] foldersToEmpty =
                 {
-                    $@"C:\Users\{user}\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content",
-                    $@"C:\Users\{user}\AppData\Local\D3DSCache",
-                    $@"C:\Users\{user}\AppData\Local\Temp",
-                    $@"C:\Users\{user}\.cache",
-                    $@"C:\Users\{user}\AppData\LocalLow\Temp",
+                    // programdata
+                    // $@"C:\ProgramData\"
+                    $@"C:\ProgramData\Microsoft\Windows Defender\Scans\History\Results\Resource",
+                    $@"C:\ProgramData\Microsoft\Windows Defender\Scans\History\Results\Quick",
+                    $@"C:\ProgramData\Microsoft\Windows Defender\Support",
+                    $@"C:\ProgramData\Microsoft\Windows Defender\Scans\MetaStore",
+                    $@"C:\ProgramData\Microsoft\Windows Defender\Scans\History\ReportLatency\Latency",
+                    $@"C:\ProgramData\Microsoft\Windows Defender\Scans\History\CacheManager",
+                    $@"C:\ProgramData\Microsoft\Windows\WER\Temp",
+                    $@"C:\ProgramData\Microsoft\Windows\WER\ReportQueue",
                     $@"C:\ProgramData\Microsoft\Windows\WER\ReportArchive",
+                    $@"C:\ProgramData\temp",
+                    $@"C:\ProgramData\Microsoft\Windows\WER\ReportArchive",
+
+                    // windows
+                    // $@"C:\Windows\"
+                    $@"C:\Windows\pchealth\helpctr\OfflineCache",
+                    $@"C:\Windows\pchealth\ERRORREP",
+                    $@"C:\Windows\System32\Winevt\Logs",
+                    $@"C:\Windows\SysNative\Winevt\Logs",
+                    $@"C:\Windows\LiveKernelReports",
+                    $@"C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization",
+                    $@"C:\Windows\system32\catroot2",
                     $@"C:\Windows\SoftwareDistribution\Download",
                     $@"C:\Windows\Temp",
+                    $@"C:\Windows\Minidump",
+                    $@"C:\Windows\Prefetch",
+                    $@"C:\Windows\Temp",
+                    $@"C:\Windows\SoftwareDistribution\download",
+                    $@"C:\Windows\Downloaded Program Files",
+
+                    // user
+                    // $@"C:\Users\{user}\"
+                    $@"C:\Users\{user}\.cache",
+
+                    // roaming
+                    // $@"C:\Users\{user}\AppData\"
+                    $@"C:\Users\{user}\AppData\Roaming\discord\Code Cache",
+                    $@"C:\Users\{user}\AppData\Roaming\Microsoft\Teams\Code Cache\js",
+                    $@"C:\Users\{user}\AppData\Roaming\discord\Code Cache\js",
+                    $@"C:\Users\{user}\AppData\Microsoft\Windows\Recent\AutomaticDestinations",
+                    $@"C:\Users\{user}\AppData\Microsoft\Windows\Recent\CustomDestinations",
+
+                    // local
+                    // $@"C:\Users\{user}\AppData\Local\"
+                    $@"C:\Users\{user}\AppData\Local\PCHealth\ErrorRep\QSignoff",
+                    $@"C:\Users\{user}\AppData\Local\D3DSCache",
+                    $@"C:\Users\{user}\AppData\Local\Microsoft\Windows\AppCache",
+                    $@"C:\Users\{user}\AppData\Local\Microsoft\Windows\WebCache",
+                    $@"C:\Users\{user}\AppData\Local\Microsoft\Windows\Temporary Internet Files",
+                    $@"C:\Users\{user}\AppData\Local\Microsoft\Windows\INetCache\IE\",
+                    $@"C:\Users\{user}\AppData\Local\D3DSCache",
+                    $@"C:\Users\{user}\AppData\Local\Temp",
                     $@"C:\Users\{user}\AppData\Local\NVIDIA\DXCache",
                     $@"C:\Users\{user}\AppData\Local\NVIDIA\GLCache",
                     $@"C:\Users\{user}\AppData\Local\CapCut\User Data\Cache",
-                    $@"C:\Users\{user}\AppData\Roaming\discord\Code Cache",
                     $@"C:\Users\{user}\AppData\Local\pip\cache",
-                    $@"C:\Users\{user}\AppData\Roaming\Microsoft\Teams\Code Cache\js",
-                    $@"C:\Users\{user}\AppData\Roaming\discord\Code Cache\js",
                     $@"C:\Users\{user}\AppData\Local\Microsoft\Edge\User Data\BrowserMetrics",
                     $@"C:\Users\{user}\AppData\Local\Google\Chrome\User Data\Default\Cache\Cache_Data",
                     $@"C:\Users\{user}\AppData\Local\Google\Chrome\User Data\Default\Service Worker\CacheStorage",
@@ -153,6 +199,11 @@ namespace snooClient
                     $@"C:\Users\{user}\AppData\Local\Google\Chrome\User Data\Profile 9\Service Worker\CacheStorage",
                     $@"C:\Users\{user}\AppData\Local\Google\Chrome\User Data\Profile 10\Cache\Cache_Data",
                     $@"C:\Users\{user}\AppData\Local\Google\Chrome\User Data\Profile 10\Service Worker\CacheStorage",
+
+                    // locallow
+                    // $@"C:\Users\{user}\AppData\LocalLow\"
+                    $@"C:\Users\{user}\AppData\LocalLow\Temp",
+                    $@"C:\Users\{user}\AppData\LocalLow\Microsoft\CryptnetUrlCache\Content",
                     $@"C:\Users\{user}\AppData\LocalLow\Microsoft\CryptnetUrlCache\MetaData"
                 };
 
@@ -161,11 +212,12 @@ namespace snooClient
                     EmptyFolder(folder);
                 }
 
+
                 Console.WriteLine("System optimized successfully.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while optimizing the system: {ex.Message}");
+                Console.WriteLine($"error: {ex.Message}");
             }
         }
 
