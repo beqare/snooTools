@@ -10,7 +10,7 @@ The tool is still in a so-called open beta version, which will be updated with m
 
 ## Is it a virus? NO
 
-Do not spread untruths and do not claim that it is a virus, look in the source code yourself if you do not believe me. I would be skeptical too, but in this case, if you have a little knowledge of batch, you can analyze the source code and determine that it is not a virus, I just want to provide a good free tool for you, and not make any profit! Best regards.
+Do not spread untruths and do not claim that it is a virus, look in the source code yourself if you do not believe me. I would be skeptical too, but in this case, if you have a little knowledge of C#, you can analyze the source code and determine that it is not a virus, I just want to provide a good free tool for you, and not make any profit! Best regards.
 
 ---
 
