@@ -32,8 +32,8 @@ namespace snooClient
                 Console.WriteLine($"--- Welcome to {Name} ---");
                 Console.WriteLine("");
                 Console.WriteLine("--- Tools");
-                Console.WriteLine("[1] Webhooksender");
-                Console.WriteLine("[2] Systemoptimizer");
+                Console.WriteLine("[1] Systemoptimizer");
+                Console.WriteLine("[2] Webhooksender");
                 Console.WriteLine("[3] IPAdressviewer");
                 Console.WriteLine("[4] Speedtest");
                 Console.WriteLine("");
