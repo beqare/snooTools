@@ -50,13 +50,13 @@ namespace snooClient
                 {
                     case "1":
                         Console.Clear();
-                        Console.Title = "Webhooksender" + Title;
-                        await WebhookSender();
+                        Console.Title = "Systemoptimizer" + Title;
+                         SystemOptimizer();
                         break;
                     case "2":
                         Console.Clear();
-                        Console.Title = "Systemoptimizer" + Title;
-                        SystemOptimizer();
+                        Console.Title = " Webhooksender" + Title;
+                        await WebhookSender();
                         break;
                     case "3":
                         Console.Clear();
@@ -199,6 +199,8 @@ namespace snooClient
                     $@"C:\Users\{user}\AppData\Local\Google\Chrome\User Data\Profile 9\Service Worker\CacheStorage",
                     $@"C:\Users\{user}\AppData\Local\Google\Chrome\User Data\Profile 10\Cache\Cache_Data",
                     $@"C:\Users\{user}\AppData\Local\Google\Chrome\User Data\Profile 10\Service Worker\CacheStorage",
+                    $@"C:\Users\{user}\AppData\Local\Opera Software\Opera Stable\Default\Cache\Cache_Data",
+                    $@"C:\Users\{user}\AppData\Local\Opera Software\Opera Stable\Default\System Cache\Cache_Data",
 
                     // locallow
                     // $@"C:\Users\{user}\AppData\LocalLow\"
