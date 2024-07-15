@@ -16,6 +16,10 @@ Do not spread untruths and do not claim that it is a virus, look in the source c
 
 ![changelog](https://snoopti.de/cloud/snootools/changelog-text.png)
 
+### v2.0.2
+- added opera path
+- moved 1 to 2
+
 ### v2.0.1
 - added more optimizing paths
 
