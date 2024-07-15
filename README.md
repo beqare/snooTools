@@ -26,11 +26,13 @@ Do not spread untruths and do not claim that it is a virus, look in the source c
 ### v2.0.0
 - Moved from bat to C#
 - Complete new
-- New Features
- - Webhooksender
- - show Ip Infos
- - System optimizer
- - Speedtest
+- added `Webhooksender`
+- added `show Ip Infos`
+- added `System optimizer`
+- added `Speedtest
+- removed `Health Scan`
+- removed `Benchmark`
+- remove `refresher`
 
 ### v1.2.0
 
