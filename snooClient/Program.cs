@@ -406,7 +406,11 @@ namespace snooClient
             double speedInMbps = bitsPerSecond / 1024 / 1024;
             return speedInMbps;
         }
-
+        // ---------------------------------------- tool: webhook sender ----------------------------------------
+        static void WingetUpdater()
+        {
+            // TODO: winget upgrade --all --include-unkown
+        }
         // -------------------- system: countdown --------------------
         static void Countdown(int seconds)
         {
