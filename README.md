@@ -1,9 +1,9 @@
 # [DOWNLOAD LATEST](https://github.com/snoopti/snooTools/releases/latest)
 
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/snoopti/snooTools/total)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/beqare/snooTools/total)
 
 
-![logo](https://snoopti.de/cloud/snootools/logo.png)
+![logo](https://beqare.de/cloud/snootools/logo.png)
 The tool is still in a so-called open beta version, which will be updated with more features or improvements in the future, I hope you like the tool and are satisfied with it, please do not be surprised if bugs appear from time to time.
 
 ---
@@ -14,7 +14,7 @@ Do not spread untruths and do not claim that it is a virus, look in the source c
 
 ---
 
-![changelog](https://snoopti.de/cloud/snootools/changelog-text.png)
+![changelog](https://beqare.de/cloud/snootools/changelog-text.png)
 
 ### v2.0.2
 - added opera path
